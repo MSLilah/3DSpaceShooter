@@ -3,14 +3,18 @@ using System.Collections;
 
 public class GameController : MonoBehaviour {
 	public GameObject asteroid;
+	public Vector3 astSpawnValues;
+	public static int distance = 30;
 
 	void Start() {
 		SpawnAsteroidWave ();
 	}
 
 	void SpawnAsteroidWave() {
-		Vector3 astPosition = new Vector3 ();
-		Quaternion astRotation = new Quaternion ();
+		float x = Random.value * distance;
+		float z = Mathf.Sqrt (Mathf.Pow (distance, 2) - Mathf.Pow (x, 2));
+		Vector3 astPosition = new Vector3 (x, 1, z - 10);
+		Quaternion astRotation = Quaternion.identity;
 		Instantiate (asteroid, astPosition, astRotation);
 	}
 }
