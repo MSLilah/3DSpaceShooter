@@ -4,7 +4,7 @@ using System.Collections;
 public class GameController : MonoBehaviour {
 	public GameObject asteroid;
 	public Vector3 astSpawnValues;
-	public static int distance = 30;
+	public static int distance = 60;
 
 	void Start() {
 		SpawnAsteroidWave ();
