@@ -21,8 +21,12 @@ public class GameController : MonoBehaviour {
 		yield return new WaitForSeconds (startWait);
 		while (true) {
 			for (int i = 0; i < numAsteroids; i++) {
-				float x = Random.value * distance;
+				float x = Random.Range(-1, 1) * distance;
 				float z = Mathf.Sqrt (Mathf.Pow (distance, 2) - Mathf.Pow (x, 2));
+				float randomCheck = Random.value;
+				if (randomCheck > 0.5) {
+					z *= -1;
+				}
 				Vector3 astPosition = new Vector3 (x, 1, z - 10);
 				Quaternion astRotation = Quaternion.identity;
 				Instantiate (asteroid, astPosition, astRotation);
