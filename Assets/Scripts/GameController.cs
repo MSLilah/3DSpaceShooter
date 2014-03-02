@@ -5,16 +5,36 @@ public class GameController : MonoBehaviour {
 	public GameObject asteroid;
 	public Vector3 astSpawnValues;
 	public static int distance = 60;
+	public float startWait;
+	public float spawnWait;
+	public float waveWait;
+	private int numAsteroids = 3;
+	private int waveNum = 0;
+	public const int wavesBeforeIncrease = 3;
+	private bool startWave = true;
 
 	void Start() {
-		SpawnAsteroidWave ();
+		StartCoroutine(SpawnAsteroidWave ());
 	}
 
-	void SpawnAsteroidWave() {
-		float x = Random.value * distance;
-		float z = Mathf.Sqrt (Mathf.Pow (distance, 2) - Mathf.Pow (x, 2));
-		Vector3 astPosition = new Vector3 (x, 1, z - 10);
-		Quaternion astRotation = Quaternion.identity;
-		Instantiate (asteroid, astPosition, astRotation);
+	IEnumerator SpawnAsteroidWave() {
+		yield return new WaitForSeconds (startWait);
+		while (true) {
+			for (int i = 0; i < numAsteroids; i++) {
+				float x = Random.value * distance;
+				float z = Mathf.Sqrt (Mathf.Pow (distance, 2) - Mathf.Pow (x, 2));
+				Vector3 astPosition = new Vector3 (x, 1, z - 10);
+				Quaternion astRotation = Quaternion.identity;
+				Instantiate (asteroid, astPosition, astRotation);
+				yield return new WaitForSeconds(spawnWait);
+			}
+			yield return new WaitForSeconds(waveWait);
+			waveNum++;
+			if (waveNum > wavesBeforeIncrease) {
+				numAsteroids++;
+				waveNum = 0;
+			}
+		}
 	}
 }
+
